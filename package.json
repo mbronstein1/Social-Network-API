@@ -20,6 +20,6 @@
   "homepage": "https://github.com/mbronstein1/Social-Network-API-Challenge-18#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "mongodb": "^4.5.0"
+    "mongoose": "^6.0.13"
   }
 }
