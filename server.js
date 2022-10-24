@@ -5,12 +5,12 @@ const db = require('./config/connection');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
-// const routes = require('./routes');
+const routes = require('./routes');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// app.use(routes)
+app.use(routes)
 
 //Open/connect/sync with MongoDB databae and then run server
 db.once('open', () => {
