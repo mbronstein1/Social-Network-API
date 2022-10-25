@@ -26,5 +26,10 @@ module.exports = {
                 console.log(err);
                 res.status(500).json(err);
             })
+    },
+    getOneThought(req, res) {
+        Thoughts.findOne({_id: req.params.thoughtId})
+            .then((thought) => res.status(200).json(thought))
+            .catch((err) => res.status(500).json(err))
     }
-}
+};
