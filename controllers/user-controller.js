@@ -4,6 +4,7 @@ module.exports = {
     getUsers(req, res) {
         User.find({})
             .select('-__v')
+            .populate('thoughts')
             .then((results) => {
                 res.status(200).json(results)
             })
@@ -17,6 +18,7 @@ module.exports = {
     getOneUser(req, res) {
         User.findOne({_id: req.params.userId})
         .select('-__v')
+        .populate('thoughts')
         .then((results) => {
             res.status(200).json(results)
         })

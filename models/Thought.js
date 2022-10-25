@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose');
 const Reactions = require('./Reaction');
-// const { formatDate, formatTime } = require('../utils/dateFormat');
+const { formatDate, formatTime } = require('../utils/dateFormat');
 
 const thoughtSchema = new Schema(
     {
@@ -11,14 +11,11 @@ const thoughtSchema = new Schema(
             maxLength: 280
         },
         createdAt: {
-            // type: Date,
-            // default: Date.now,
-            // get: (date) => {
-            //     if (date) return `${new Date(date).getMonth() + 1}/${new Date(date).getDate()}/${new Date(date).getFullYear()} at ${new Date(date).toLocaleTimeString()}`;
-            // get: `${formatDate} at ${formatTime},
-            // }
-            type: String,
-            default: `${new Date().getMonth() + 1}/${new Date().getDate()}/${new Date().getFullYear()} at ${new Date().toLocaleTimeString()}`,
+            type: Date,
+            default: Date.now,
+            get: (date) => {
+                return `${formatDate(date)} ${formatTime(date)}`;
+            },
         },
         username: { //this will be found in the req.params when creating a new thought to keep track of which user created it
             type: String,
@@ -29,6 +26,7 @@ const thoughtSchema = new Schema(
     {
         toJSON: {
             virtuals: true,
+            getters: true,
         },
         id: false
     }
