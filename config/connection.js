@@ -5,8 +5,8 @@ const connectionString =
 
 //Wrap Mongoose around local connection to MongoDB
 connect(connectionString, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
+  useNewUrlParser: true,
+  useUnifiedTopology: true
 });
 
 module.exports = connection;

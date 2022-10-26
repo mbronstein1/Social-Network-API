@@ -3,9 +3,9 @@ const { User, Thoughts } = require('../models');
 module.exports = {
     getUsers(req, res) {
         User.find({})
-        .select('-__v')
-        .populate('thoughts')
-        .populate('friends')
+            .select('-__v')
+            .populate('thoughts')
+            .populate('friends')
             .then((results) => {
                 res.status(200).json(results)
             })
@@ -31,7 +31,7 @@ module.exports = {
             { _id: req.params.userId },
             req.body,
             { new: true })
-            .then((results) => res.status(200).json({message: 'Successfully updated user', results}))
+            .then((results) => res.status(200).json({ message: 'Successfully updated user', results }))
             .catch((err) => res.status(500).json(err))
     },
     deleteUser(req, res) {
@@ -64,13 +64,13 @@ module.exports = {
     deleteFriend(req, res) {
         User.findOneAndUpdate(
             { _id: req.params.userId },
-            { $pull: { friends: req.params.friendId} },
+            { $pull: { friends: req.params.friendId } },
             { new: true }
-            )
-            .then((user) => 
-            !user
-                ? res.status(404).json({ message: 'No user with this id!'})
-                : res.status(200).json({ message: 'Friend successfully deleted'})
+        )
+            .then((user) =>
+                !user
+                    ? res.status(404).json({ message: 'No user with this id!' })
+                    : res.status(200).json({ message: 'Friend successfully deleted' })
             )
     }
 };
