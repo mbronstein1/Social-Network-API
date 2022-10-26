@@ -39,7 +39,7 @@ module.exports = {
             .then((user) =>
                 !user
                     ? res.status(404).json({ message: 'No user with this id!' })
-                    : Thoughts.findOneAndDelete({ username: user.username })
+                    : Thoughts.deleteMany({ username: user.username })
             )
             .then((thought) =>
                 !thought
