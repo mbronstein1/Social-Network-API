@@ -27,8 +27,11 @@ module.exports = {
             .catch((err) => res.status(500).json(err))
     },
     updateUser(req, res) {
-        User.findOneAndUpdate({ _id: req.params.userId }, req.body, { new: true })
-            .then((results) => res.status(200).json(results))
+        User.findOneAndUpdate(
+            { _id: req.params.userId },
+            req.body,
+            { new: true })
+            .then((results) => res.status(200).json({message: 'Successfully updated user', results}))
             .catch((err) => res.status(500).json(err))
     },
     deleteUser(req, res) {
