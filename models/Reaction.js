@@ -1,5 +1,5 @@
-const { Schema } = require('mongoose');
-// const { formatDate, formatTime } = require('../utils/dateFormat');
+const { Schema, Types } = require('mongoose');
+const { formatDate, formatTime } = require('../utils/dateFormat');
 
 const reactionSchema = new Schema(
     {
@@ -17,14 +17,11 @@ const reactionSchema = new Schema(
             required: true,
         },
         createdAt: {
-            // type: Date,
-            // default: Date.now,
-            // get: (date) => {
-            //     if (date) return `${new Date(date).getMonth() + 1}/${new Date(date).getDate()}/${new Date(date).getFullYear()} at ${new Date(date).toLocaleTimeString()}`;
-            // get: `${formatDate} at ${formatTime},
-            // }
-            type: String,
-            default: `${new Date().getMonth() + 1}/${new Date().getDate()}/${new Date().getFullYear()} at ${new Date().toLocaleTimeString()}`,
+            type: Date,
+            default: Date.now,
+            get: (date) => {
+                return `${formatDate(date)} ${formatTime(date)}`
+            }
         }
     },
     {
