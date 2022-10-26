@@ -3,8 +3,9 @@ const { User, Thoughts } = require('../models');
 module.exports = {
     getUsers(req, res) {
         User.find({})
-            .select('-__v')
-            .populate('thoughts')
+        .select('-__v')
+        .populate('thoughts')
+        .populate('friends')
             .then((results) => {
                 res.status(200).json(results)
             })
@@ -19,6 +20,7 @@ module.exports = {
         User.findOne({ _id: req.params.userId })
             .select('-__v')
             .populate('thoughts')
+            .populate('friends')
             .then((results) => {
                 res.status(200).json(results)
             })
@@ -34,7 +36,7 @@ module.exports = {
             .then((user) =>
                 !user
                     ? res.status(404).json({ message: 'No user with this id!' })
-                    : Thoughts.findOneAndDelete({username: user.username})
+                    : Thoughts.findOneAndDelete({ username: user.username })
             )
             .then((thought) =>
                 !thought
@@ -42,5 +44,30 @@ module.exports = {
                     : res.status(200).json('User successfully deleted')
             )
             .catch((err) => res.status(500).json(err))
+    },
+    addNewFriend(req, res) {
+        User.findOneAndUpdate(
+            { _id: req.params.userId },
+            { $push: { friends: req.params.friendId } },
+            { new: true }
+        )
+            .then((user) =>
+                !user
+                    ? res.status(404).json({ message: 'No user with this id!' })
+                    : res.status(200).json('Friend successfully added')
+            )
+            .catch((err) => res.status(500).json(err))
+    },
+    deleteFriend(req, res) {
+        User.findOneAndUpdate(
+            { _id: req.params.userId },
+            { $pull: { friends: req.params.friendId} },
+            { new: true }
+            )
+            .then((user) => 
+            !user
+                ? res.status(404).json({ message: 'No user with this id!'})
+                : res.status(200).json({ message: 'Friend successfully deleted'})
+            )
     }
 };
